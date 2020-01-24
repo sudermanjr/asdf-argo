@@ -17,6 +17,7 @@ install_kind() {
 
   echo "Downloading kind from ${download_url} to ${binary_path}"
   curl -L "${download_url}" -o "${binary_path}"
+  chmod +x "${binary_path}"
 }
 
 
