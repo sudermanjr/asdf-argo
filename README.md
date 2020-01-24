@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/sudermanjr/asdf-argo/workflows/master/badge.svg?branch=master)](https://github.com/sudermanjr/asdf-argo/actions)
 
-[kubernetes in docker](https://github.com/argoproj/argo) plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
+[argo](https://github.com/argoproj/argo) plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
 ## Install
 
