@@ -16,7 +16,7 @@ install_kind() {
   mkdir -p "${bin_install_path}"
 
   echo "Downloading kind from ${download_url} to ${binary_path}"
-  curl -Lo $binary_path $download_url
+  curl -L "${download_url}" -o "${binary_path}"
 
   echo "Cleaning previous binaries"
   rm -f $binary_path 2>/dev/null || true
