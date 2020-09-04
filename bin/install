@@ -4,13 +4,16 @@ set -e
 set -o pipefail
 
 install_argo() {
-  local install_type=$1
-  local version=$2
-  local install_path=$3
-  local platform="$(uname | tr '[:upper:]' '[:lower:]')-amd64"
-  local bin_install_path="$install_path/bin"
-  local binary_path="$bin_install_path/argo"
-  local download_url=$(get_download_url $version $platform)
+  local install_type version install_path platform bin_install_path binary_path download_url
+
+  # shellcheck disable=SC2034
+  install_type="$1"
+  version="$2"
+  install_path="$3"
+  platform="$(uname | tr '[:upper:]' '[:lower:]')-amd64"
+  bin_install_path="$install_path/bin"
+  binary_path="$bin_install_path/argo"
+  download_url="$(get_download_url "$version" "$platform")"
 
   echo "Creating bin directory"
   mkdir -p "${bin_install_path}"
@@ -21,8 +24,10 @@ install_argo() {
 }
 
 download() {
-  local url="$1"
-  local output="$2"
+  local url output
+
+  url="$1"
+  output="$2"
 
   echo "Downloading argo from ${url} to ${output}"
 
@@ -39,10 +44,12 @@ get_filename() {
 }
 
 get_download_url() {
-  local version="$1"
-  local platform="$2"
-  local filename="$(get_filename $platform)"
+  local version platform filename
+
+  version="$1"
+  platform="$2"
+  filename="$(get_filename "$platform")"
   echo "https://github.com/argoproj/argo/releases/download/v${version}/${filename}"
 }
 
-install_argo $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
+install_argo "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
