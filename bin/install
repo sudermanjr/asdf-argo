@@ -15,11 +15,23 @@ install_argo() {
   echo "Creating bin directory"
   mkdir -p "${bin_install_path}"
 
-  echo "Downloading argo from ${download_url} to ${binary_path}"
-  curl -L "${download_url}" -o "${binary_path}"
+  # older releases of argo do not use gzipped assets
+  download "${download_url}.gz" "${binary_path}" || download "${download_url}" "${binary_path}"
   chmod +x "${binary_path}"
 }
 
+download() {
+  local url="$1"
+  local output="$2"
+
+  echo "Downloading argo from ${url} to ${output}"
+
+  if [[ "$url" =~ .gz$ ]]; then
+    curl -fL "${url}" | gunzip > "${output}"
+  else
+    curl -fL "${url}" -o "${output}"
+  fi
+}
 
 get_filename() {
   local platform="$1"
