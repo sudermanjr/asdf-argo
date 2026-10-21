@@ -10,7 +10,13 @@ install_argo() {
   install_type="$1"
   version="$2"
   install_path="$3"
-  platform="$(uname | tr '[:upper:]' '[:lower:]')-amd64"
+  local os_name
+  os_name="$(uname | tr '[:upper:]' '[:lower:]')"
+  local arch="amd64"
+  if [[ "${os_name}" == "darwin" ]]; then
+    arch="$(uname -m | tr -d '\n')"
+  fi
+  platform="${os_name}-${arch}"
   bin_install_path="$install_path/bin"
   binary_path="$bin_install_path/argo"
   download_url="$(get_download_url "$version" "$platform")"
